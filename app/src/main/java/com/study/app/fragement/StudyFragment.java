@@ -1,62 +1,47 @@
 package com.study.app.fragement;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.ListView;
 
 
 import com.study.app.R;
+import com.study.app.adpater.CourseAdapter;
+import com.study.app.adpater.StudyAdapter;
+import com.study.app.bean.Course;
+import com.study.app.bean.Study;
+import com.study.app.bean.User;
+import com.study.app.data.DBManger;
 
-/***
- * 图片解析界面
- *
- * */
+import java.util.ArrayList;
+import java.util.List;
+
 public class StudyFragment extends Fragment {
+    List<Study> mStudys = new ArrayList<>();
 
-    public static final int REQUEST_TAKE_PHOTO_CODE = 101;
+    ListView mMsgListview;
 
-    ImageView mSelectImg;
-    TextView mDecodeTv;
-    Button mSelecLocalPicBtn;
-    Button mTakePicBtn;
+    StudyAdapter mAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragement_decode, container, false);
+        View view =  inflater.inflate(R.layout.fragement_study, container, false);
         initView(view);
+
         return view;
     }
 
     public static StudyFragment getInstance() {
         return new StudyFragment();
-    }
-
-    public void initView(View view){
-        mSelectImg = view.findViewById(R.id.select_pic_img);
-        mDecodeTv = view.findViewById(R.id.decode_res_tv);
-        mSelecLocalPicBtn = view.findViewById(R.id.select_pic_local);
-        mTakePicBtn = view.findViewById(R.id.select_pic_photo);
-
-        mSelecLocalPicBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 1);
-            }
-        });
-
-    };
-
-    public void initData(){
-
     }
 
     @Override
@@ -65,5 +50,15 @@ public class StudyFragment extends Fragment {
         initData();
     }
 
+    public void initView(View view){
+        mMsgListview = view.findViewById(R.id.search_info_list);
+    };
+
+    public void initData() {
+        User user = DBManger.getInstance(getContext()).mUser;
+        mStudys = DBManger.getInstance(getContext()).getStudysByUserId(user.getUserId());
+        mAdapter = new StudyAdapter(getContext(),mStudys);
+        mMsgListview.setAdapter(mAdapter);
+    }
 
 }

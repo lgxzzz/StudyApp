@@ -2,6 +2,7 @@ package com.study.app.adpater;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,23 +10,26 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.study.app.ChapterActivity;
+import com.study.app.CourseDetailActivity;
 import com.study.app.R;
 import com.study.app.WebViewActivity;
+import com.study.app.bean.Course;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TreeLesionInfoAdapter extends BaseAdapter {
+public class CourseAdapter extends BaseAdapter {
 
     Context mContext;
-    List<TreeLesion> mMsgInfos = new ArrayList<>();
+    List<Course> mMsgInfos = new ArrayList<>();
 
-    public TreeLesionInfoAdapter(Context mContext, List<TreeLesion> mMsgInfos){
+    public CourseAdapter(Context mContext, List<Course> mMsgInfos){
         this.mContext = mContext;
         this.mMsgInfos = mMsgInfos;
     }
 
-    public void setData(List<TreeLesion> mMsgInfos){
+    public void setData(List<Course> mMsgInfos){
         this.mMsgInfos = mMsgInfos;
         notifyDataSetChanged();
     }
@@ -47,27 +51,28 @@ public class TreeLesionInfoAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        final TreeLesion msgInfo = mMsgInfos.get(i);
-        TreeLesionInfoAdapter.ViewHoler holer = null;
+        final Course msgInfo = mMsgInfos.get(i);
+        CourseAdapter.ViewHoler holer = null;
         if (view == null){
-            holer = new TreeLesionInfoAdapter.ViewHoler();
+            holer = new CourseAdapter.ViewHoler();
             view = LayoutInflater.from(mContext).inflate(R.layout.msg_item,null);
             holer.mPic = (ImageView) view.findViewById(R.id.msg_pic);
             holer.mTitle = (TextView) view.findViewById(R.id.msg_title);
             holer.mContent = (TextView) view.findViewById(R.id.msg_content);
             view.setTag(holer);
         }else{
-            holer = (TreeLesionInfoAdapter.ViewHoler) view.getTag();
+            holer = (CourseAdapter.ViewHoler) view.getTag();
         }
-        holer.mPic.setBackgroundResource(msgInfo.getTREELESION_PIC_ID());
-        holer.mTitle.setText(msgInfo.getTREELESION_TYPE());
-        holer.mContent.setText(msgInfo.getTREELESION_CONTEX());
+        holer.mPic.setBackgroundResource(Integer.parseInt(msgInfo.getCOURSE_PIC_ID()));
+        holer.mTitle.setText(msgInfo.getCOURSE_TYPE());
+        holer.mContent.setText(msgInfo.getCOURSE_CONTEX());
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(mContext,WebViewActivity.class);
-                intent.putExtra("url",msgInfo.getTREELESION_URL());
+                Intent intent = new Intent(mContext, CourseDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("DATA", msgInfo);
+                intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
         });

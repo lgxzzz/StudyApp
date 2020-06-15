@@ -15,7 +15,7 @@ import android.widget.ListView;
 
 
 import com.study.app.R;
-import com.study.app.adpater.TreeLesionInfoAdapter;
+import com.study.app.adpater.CourseAdapter;
 import com.study.app.bean.Course;
 import com.study.app.data.DBManger;
 
@@ -25,19 +25,19 @@ import java.util.List;
 public class CourseFragment extends Fragment {
 
 
-    List<Course> treeLesions = new ArrayList<>();
+    List<Course> mCourses = new ArrayList<>();
 
     ListView mMsgListview;
 
-    TreeLesionInfoAdapter mAdapter;
+    CourseAdapter mAdapter;
 
-    EditText mTreeLesionSearchEd;
+    EditText mCourseSearchEd;
 
-    Button mTreeLesionSearchClearBtn;
+    Button mCourseSearchClearBtn;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragement_treelesion, container, false);
+        View view =  inflater.inflate(R.layout.fragement_course, container, false);
         initView(view);
 
         return view;
@@ -56,19 +56,19 @@ public class CourseFragment extends Fragment {
     public void initView(View view){
         mMsgListview = view.findViewById(R.id.search_info_list);
 
-        mTreeLesionSearchEd = view.findViewById(R.id.treelesion_search_ed);
+        mCourseSearchEd = view.findViewById(R.id.treelesion_search_ed);
 
-        mTreeLesionSearchClearBtn = view.findViewById(R.id.treelesion_search_clear_btn);
+        mCourseSearchClearBtn = view.findViewById(R.id.treelesion_search_clear_btn);
 
-        mTreeLesionSearchClearBtn.setOnClickListener(new View.OnClickListener() {
+        mCourseSearchClearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mTreeLesionSearchEd.setText("");
+                mCourseSearchEd.setText("");
                 searchData();
             }
         });
 
-        mTreeLesionSearchEd.addTextChangedListener(new TextWatcher() {
+        mCourseSearchEd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -87,21 +87,21 @@ public class CourseFragment extends Fragment {
     };
 
     public void initData() {
-        treeLesions = DBManger.getInstance(getContext()).getAllTreeLesions();
-        mAdapter = new TreeLesionInfoAdapter(getContext(),treeLesions);
+        mCourses = DBManger.getInstance(getContext()).getAllCourse();
+        mAdapter = new CourseAdapter(getContext(),mCourses);
         mMsgListview.setAdapter(mAdapter);
     }
 
     //根据查询条件查询
     public void searchData(){
-        String value = mTreeLesionSearchEd.getEditableText().toString();
+        String value = mCourseSearchEd.getEditableText().toString();
         if (value.length()==0){
-            treeLesions = DBManger.getInstance(getContext()).getAllTreeLesions();
+            mCourses = DBManger.getInstance(getContext()).getAllCourse();
         }else{
-            treeLesions = DBManger.getInstance(getContext()).getTreeLesionsByKey(value);
+            mCourses = DBManger.getInstance(getContext()).getCoursesByKey(value);
         }
-        if (treeLesions.size()>0){
-            mAdapter.setData(treeLesions);
+        if (mCourses.size()>0){
+            mAdapter.setData(mCourses);
         }
     }
 }

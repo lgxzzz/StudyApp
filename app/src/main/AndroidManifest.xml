@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity android:name=".SplashActivity"
             android:windowSoftInputMode="adjustPan"
             >
             <intent-filter>
@@ -18,11 +18,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SplashActivity"
+        <activity android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan"
             ></activity>
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".CourseDetailActivity"></activity>
+        <activity android:name=".ChapterActivity"/>
+        <activity android:name=".ChapterDetailActivity"/>
+        <activity android:name=".MyPingJiaActivity"/>
+        <activity android:name=".WebViewActivity"/>
     </application>
 
 </manifest>

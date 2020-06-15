@@ -2,6 +2,7 @@ package com.study.app.adpater;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,23 +10,27 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.study.app.ChapterDetailActivity;
+import com.study.app.CourseDetailActivity;
 import com.study.app.R;
 import com.study.app.WebViewActivity;
+import com.study.app.bean.Chapter;
+import com.study.app.bean.Course;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PestInfoAdapter extends BaseAdapter {
+public class ChapterAdapter extends BaseAdapter {
 
     Context mContext;
-    List<Pest> mMsgInfos = new ArrayList<>();
+    List<Chapter> mMsgInfos = new ArrayList<>();
 
-    public PestInfoAdapter(Context mContext, List<Pest> mMsgInfos){
+    public ChapterAdapter(Context mContext, List<Chapter> mMsgInfos){
         this.mContext = mContext;
         this.mMsgInfos = mMsgInfos;
     }
 
-    public void setData(List<Pest> mMsgInfos){
+    public void setData(List<Chapter> mMsgInfos){
         this.mMsgInfos = mMsgInfos;
         notifyDataSetChanged();
     }
@@ -47,27 +52,28 @@ public class PestInfoAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        final Pest msgInfo = mMsgInfos.get(i);
-        PestInfoAdapter.ViewHoler holer = null;
+        final Chapter msgInfo = mMsgInfos.get(i);
+        ChapterAdapter.ViewHoler holer = null;
         if (view == null){
-            holer = new PestInfoAdapter.ViewHoler();
+            holer = new ChapterAdapter.ViewHoler();
             view = LayoutInflater.from(mContext).inflate(R.layout.msg_item,null);
             holer.mPic = (ImageView) view.findViewById(R.id.msg_pic);
             holer.mTitle = (TextView) view.findViewById(R.id.msg_title);
             holer.mContent = (TextView) view.findViewById(R.id.msg_content);
             view.setTag(holer);
         }else{
-            holer = (PestInfoAdapter.ViewHoler) view.getTag();
+            holer = (ChapterAdapter.ViewHoler) view.getTag();
         }
-        holer.mPic.setBackgroundResource(msgInfo.getPEST_PIC_ID());
-        holer.mTitle.setText(msgInfo.getPEST_TYPE());
-        holer.mContent.setText(msgInfo.getPEST_CONTEX());
+        holer.mPic.setBackgroundResource(R.drawable.chapter_icon);
+        holer.mTitle.setText(msgInfo.getCHAPTER_NAME());
+        holer.mContent.setText(msgInfo.getCHAPTER_FINISH());
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(mContext,WebViewActivity.class);
-                intent.putExtra("url",msgInfo.getPEST_URL());
+                Intent intent = new Intent(mContext, ChapterDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("DATA", msgInfo);
+                intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
         });

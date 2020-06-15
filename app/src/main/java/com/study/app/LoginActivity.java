@@ -33,6 +33,10 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
+
+//        mName = "q";
+//        mPassWord = "q";
+//        login();
     }
 
     public void init(){
@@ -93,24 +97,28 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 break;
             case R.id.reg_login_btn:
                 String codeStr = mPicCodeEd.getText().toString().trim();
-                if (null == codeStr || TextUtils.isEmpty(codeStr)) {
-                    Toast.makeText(LoginActivity.this, "请输入验证码", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                DBManger.getInstance(LoginActivity.this).login(mName, mPassWord, new DBManger.IListener() {
-                    @Override
-                    public void onSuccess() {
-                        Toast.makeText(LoginActivity.this,"登陆成功", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        LoginActivity.this.finish();
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        Toast.makeText(LoginActivity.this,error, Toast.LENGTH_LONG).show();
-                    }
-                });
+//                if (null == codeStr || TextUtils.isEmpty(codeStr)) {
+//                    Toast.makeText(LoginActivity.this, "请输入验证码", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+                login();
                 break;
         }
+    }
+
+    public void login(){
+        DBManger.getInstance(LoginActivity.this).login(mName, mPassWord, new DBManger.IListener() {
+            @Override
+            public void onSuccess() {
+                Toast.makeText(LoginActivity.this,"登陆成功", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                LoginActivity.this.finish();
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(LoginActivity.this,error, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

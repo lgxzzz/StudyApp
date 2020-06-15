@@ -65,6 +65,7 @@
         android:orientation="horizontal"
         android:layout_margin="10dp"
         android:background="@drawable/backgroud1"
+        android:visibility="gone"
         >
         <ImageView
             android:layout_width="wrap_content"
