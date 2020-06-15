@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.study.app.bean.Course;
 import com.study.app.bean.User;
 import com.study.app.util.SharedPreferenceUtil;
 
@@ -226,8 +227,8 @@ public class DBManger {
     }
 
     //根据条件查询树木病害信息
-    public List<TreeLesion> getAllTreeLesions(){
-        List<TreeLesion> mTreeLesionInfoList = new ArrayList<>();
+    public List<Course> getAllCourse(){
+        List<Course> mTreeLesionInfoList = new ArrayList<>();
         try{
             SQLiteDatabase db = mDBHelper.getWritableDatabase();
             Cursor cursor = db.query(SQLiteDbHelper.TAB_TREELESION,null,null,null,null,null,null);
@@ -238,14 +239,14 @@ public class DBManger {
                 String TREELESION_URL = cursor.getString(cursor.getColumnIndex("TREELESION_URL"));
                 String TREELESION_PIC_ID = cursor.getString(cursor.getColumnIndex("TREELESION_PIC_ID"));
 
-                TreeLesion treeLesion = new TreeLesion();
-                treeLesion.setTREELESION_ID(TREELESION_ID);
-                treeLesion.setTREELESION_TYPE(TREELESION_TYPE);
-                treeLesion.setTREELESION_CONTEX(TREELESION_CONTEX);
-                treeLesion.setTREELESION_PIC_ID(Integer.parseInt(TREELESION_PIC_ID));
-                treeLesion.setTREELESION_URL(TREELESION_URL);
-
-                mTreeLesionInfoList.add(treeLesion);
+//                TreeLesion treeLesion = new TreeLesion();
+//                treeLesion.setTREELESION_ID(TREELESION_ID);
+//                treeLesion.setTREELESION_TYPE(TREELESION_TYPE);
+//                treeLesion.setTREELESION_CONTEX(TREELESION_CONTEX);
+//                treeLesion.setTREELESION_PIC_ID(Integer.parseInt(TREELESION_PIC_ID));
+//                treeLesion.setTREELESION_URL(TREELESION_URL);
+//
+//                mTreeLesionInfoList.add(treeLesion);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -326,9 +327,9 @@ public class DBManger {
     }
 
     public void initDefaultData(){
-        List<TreeLesion> mTreeLesionInfoList = mDataBase.mTreeLesionInfoList;
+        List<Course> mTreeLesionInfoList = mDataBase.mTreeLesionInfoList;
         for (int i =0;i<mTreeLesionInfoList.size();i++){
-            TreeLesion treeLesion = mTreeLesionInfoList.get(i);
+            Course course = mTreeLesionInfoList.get(i);
             insertTreeLesion(treeLesion);
         }
 

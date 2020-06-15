@@ -16,6 +16,7 @@ import android.widget.ListView;
 
 import com.study.app.R;
 import com.study.app.adpater.TreeLesionInfoAdapter;
+import com.study.app.bean.Course;
 import com.study.app.data.DBManger;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import java.util.List;
 public class CourseFragment extends Fragment {
 
 
-    List<TreeLesion> treeLesions = new ArrayList<>();
+    List<Course> treeLesions = new ArrayList<>();
 
     ListView mMsgListview;
 
